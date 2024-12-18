@@ -4,8 +4,8 @@ import secrets
 from modules import index, dump, export_tables_sql_to_xlsx, dump_and_export, analytics
 from modules.html_wiki import add_html_wiki, html_wiki, delete_html_wiki, edit_html_wiki, \
     view_html_wiki
-from modules.bash import add_bash_command, bash_list_commands, delete_bash_command, edit_bash_command, \
-    get_post_bash_command
+from modules.main import add, main_list, delete, edit, \
+    main
 from modules.links import delete_links_command, links_list_commands, add_links_command, edit_links_command, \
     get_post_links_command
 from modules.python import delete_python_command, add_python_command, edit_python_command, get_post_python_command, \

@@ -2,29 +2,31 @@ from flask import Blueprint, redirect, url_for, render_template, request, flash
 
 from modules import connect
 
-bp = Blueprint('add_sql_command', __name__)
+bp = Blueprint('add', __name__)
 
 
-@bp.route("/sql/new_sql_command", methods=["GET", "POST"])
-def add_sql_command():
+@bp.route("/add", methods=["GET", "POST"])
+def add_bash_command():
     if request.method == "POST":
-        new_sql_command = request.form["sql_command"]
-        new_sql_name = request.form["sql_name"]
-        if len(request.form['sql_command']) > 4 and len(request.form['sql_name']) > 10:
+        new_bash_command = request.form["bash_command"]
+        new_bash_name = request.form["bash_name"]
+
+        if len(request.form['bash_command']) > 1 and len(request.form['bash_name']) > 10:
             conn = connect.get_db_connection()
             conn.execute(
-                "INSERT INTO sql (sql_command, sql_name) VALUES (?, ?)",
-                (new_sql_command, new_sql_name)
+                "INSERT INTO bash (bash_command, bash_name) VALUES (?, ?)",
+                (new_bash_command, new_bash_name)
             )
             conn.commit()
             conn.close()
-            if not new_sql_command:
+            if not new_bash_command:
                 flash('Ошибка сохранения записи, вы ввели мало символов!', category='danger')
             else:
                 flash('Запись успешно добавлена!', category='success')
             # В случае соблюдения условий заполнения полей, произойдёт перенаправление
-            return redirect(url_for("sql_list_commands.sql_list_commands"))
+            return redirect(url_for("bash_list_commands.bash_list_commands"))
+
         else:
             flash('Ошибка сохранения записи, вы ввели мало символов!', category='danger')
 
-    return render_template("sql/add_sql_command.html")
+    return render_template("bash/add_bash_command.html")
